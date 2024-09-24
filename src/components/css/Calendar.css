@@ -1,0 +1,17 @@
+/* .table{
+    wi
+} */
+@media(max-width:535px) {
+
+    tr th {
+        font-size: 13px;
+    }
+
+    tr td {
+        font-size: 12px;
+    }
+
+    .contant1 h1 {
+        text-align: center;
+    }
+}

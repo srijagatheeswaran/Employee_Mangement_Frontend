@@ -1,0 +1,344 @@
+.profile {
+    height: max-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 19px;
+    border-bottom: 1px solid whitesmoke;
+    background-color: white;
+}
+
+header h1 {
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0;
+    transition: all 0.2s linear;
+}
+
+header h1:hover {
+    text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.logout {
+    font-size: 21px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+
+}
+
+.logout:hover {
+    color: red;
+}
+
+header button:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    color: red !important;
+}
+
+.midContant {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    margin-top: -5px;
+    /* padding: 20px; */
+}
+
+.sidebar {
+    height: 100%;
+    width: 14%;
+    background-color: white;
+    /* border-radius: 20px; */
+
+}
+
+.sidebar ul {
+    list-style: none;
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    gap: 10px;
+    height: max-content;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+
+}
+
+.sidebar ul li {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    padding: 5px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+
+
+}
+
+.sidebar ul li:hover {
+    background-color: whitesmoke;
+}
+
+.contantBox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contant {
+    height: 90%;
+    width: 90%;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+    display: flex;
+}
+
+.imageBox {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.imgPicBox {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.sourceBox,
+.targetBox {
+    height: 150px;
+    width: 400px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.sourceBox h1,
+.targetBox h1 {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.imgPicBox i {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s linear;
+}
+
+.imgPicBox i:hover {
+    color: red;
+}
+
+.loading {
+    text-align: center;
+    margin-top: 5%;
+    font-size: 25px;
+    font-weight: 600;
+
+}
+
+.bi-list {
+    display: none;
+}
+
+@media(max-width:1024px) {
+    .imageBox {
+        height: 40%;
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .contant {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile {
+        height: 110vh;
+    }
+
+    .midContant {
+        height: 110vh;
+        justify-content: space-between;
+    }
+
+    .imgPicBox {
+        height: 60%;
+    }
+
+    .clickPic {
+        height: 43px;
+        width: 46px;
+    }
+
+    .sidebar {
+        width: 16%;
+    }
+
+
+
+    .contantBox {
+        width: 85%;
+    }
+
+    .sourceBox h1,
+    .targetBox h1 {
+        font-size: 13px;
+        padding: 0 10px;
+    }
+}
+
+@media(max-width:768px) {
+    .sidebar {
+        position: absolute;
+        /* opacity: 0; */
+        transform: translatex(-100%);
+        width: 30%;
+        z-index: 1;
+        transition: all 0.5s linear;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .bi-list {
+        display: block;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    header div {
+        display: flex;
+        gap: 23px;
+        align-items: center;
+    }
+
+    .contantBox {
+        width: 100%;
+    }
+
+    .send {
+        font-size: 15px;
+    }
+
+    .imgPicBox {
+        width: 100%;
+    }
+
+    .midContant {
+        position: relative;
+    }
+}
+
+@media(max-width:585px) {
+
+
+    .send {
+        font-size: 10px;
+    }
+
+    .image-gallery p {
+        font-size: 6px;
+    }
+
+}
+
+@media(max-width:535px) {
+    .sidebar {
+        width: 35%;
+
+    }
+
+    .sourceBox h1,
+    .targetBox h1 {
+        font-size: 10px;
+    }
+}
+
+@media(max-width:431px) {
+    .imageBox {
+        flex-direction: column;
+    }
+
+    .sourceBox,
+    .targetBox {
+        width: 247px;
+        padding: 12px;
+    }
+
+    .imageBox {
+        height: 50%;
+        gap: 20px;
+    }
+
+    .contant {
+        padding: 20px 10px;
+        gap: 10px;
+    }
+
+    .sidebar {
+        width: 57%;
+
+    }
+
+
+}
+
+
+@media(max-width:375px) {
+    header {
+        padding: 7px 15px;
+
+    }
+
+
+
+    header h1 {
+        /* margin-left: 0px !important; */
+        font-size: 19px;
+    }
+
+    .logout {
+        font-size: 21px;
+    }
+
+    header button {
+        height: 33px;
+        width: 60px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+}

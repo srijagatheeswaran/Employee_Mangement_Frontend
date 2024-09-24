@@ -1,0 +1,126 @@
+.contant1 form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    width: 60%;
+    gap: 20px;
+    align-items: center;
+    /* background-color: antiquewhite; */
+    padding: 20px;
+}
+
+.contant1 {
+    /* justify-content: center; */
+    height: 90%;
+    width: 90%;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contant1 form input {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: rgba(240, 225, 239, 0.1);
+    padding: 0 15px;
+    font-size: 15px;
+    width: 70%;
+    height: 35px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    /* margin-top: 15px; */
+}
+
+.disable {
+    cursor: not-allowed;
+}
+
+.Detail_form span {
+    text-align: start;
+    padding-top: 10px;
+
+}
+
+.contant1 form button {
+    margin-top: 15px;
+}
+
+.inputBox {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.inputBox label {
+    font-weight: 600;
+    /* font-size: 13px; */
+}
+
+@media(max-width:870px) {
+    .contant1 form {
+        width: 70%;
+    }
+}
+
+@media(max-width:768px) {
+    .inputBox label {
+        font-size: 15px;
+        width: 100%;
+        text-align: start;
+    }
+
+    .Detail_form span {
+        padding: 0;
+    }
+
+    .contant1 form input {
+        width: 100%;
+    }
+
+    .contant1 form {
+        width: 90%;
+    }
+
+    .contant1 {
+        /* justify-content: space-around; */
+        gap: 0;
+    }
+
+    .inputBox {
+        flex-direction: column;
+        gap: 10px;
+
+    }
+}
+
+@media(max-width:530px) {
+    .contant1 {
+        width: 95%;
+    }
+
+    .contant1 form {
+        width: 100%;
+    }
+}
+
+@media(max-width:520px) {
+    .contant1 form {
+        padding: 5px;
+    }
+
+}
+
+@media (max-width: 425px) {
+    .inputBox label {
+        font-size: 12px;
+    }
+}

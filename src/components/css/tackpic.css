@@ -1,0 +1,150 @@
+.picBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.picBox p {
+    margin: 0;
+}
+
+/* video{
+    height: 300px;
+    width: 80%;
+} */
+.video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s linear;
+}
+
+
+.clickPic {
+    border-radius: 50%;
+    height: 50px;
+    width: 52px;
+    border: 1px solid rgb(9, 186, 218);
+    color: rgb(9, 186, 218);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+#camera-stream {
+    /* height: 50%; */
+    width: 50%;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(196, 193, 193) 0px 0px 0px 3px; */
+    border-radius: 10px;
+}
+
+#image-capture {
+    display: none;
+    background-color: black;
+    width: 140px;
+    height: 100px;
+}
+
+.error {
+    text-align: center;
+    font-size: 15px;
+}
+
+.image-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.image-gallery p {
+    margin: 0;
+}
+
+.image-gallery img {
+    width: 70px;
+    height: auto;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.image-gallery img:hover {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+.Waiting h1 {
+    font-size: 19px !important;
+    text-align: center;
+}
+
+
+
+@media(max-width:1024px) {
+    .picBox {
+        gap: 8px;
+    }
+
+    .video {
+        gap: 10px;
+    }
+
+    #camera-stream {
+        width: 44%;
+    }
+
+    .image-gallery img {
+        width: 50px;
+    }
+
+    .image-gallery p {
+        font-size: 10px;
+    }
+
+    .picBox h1 {
+        font-size: 33px;
+    }
+}
+
+@media(max-width:768px) {
+    .picBox h1 {
+        font-size: 24px;
+    }
+
+    #camera-stream {
+        width: 28%;
+    }
+
+
+}
+
+@media(max-width:585px) {
+    #camera-stream {
+        width: 35%;
+    }
+
+
+}
+
+@media(max-width:535px) {
+
+    #camera-stream {
+        width: 40%;
+    }
+
+}
+
+@media(max-width:431px) {
+    .image-gallery p {
+        font-size: 8px;
+    }
+
+    .clickPic {
+        height: 46px;
+        width: 48px;
+    }
+
+}
