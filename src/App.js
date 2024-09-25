@@ -8,6 +8,7 @@ import Calendar from "./components/Calendar";
 
 function App() {
   return <>
+    <h1>hai</h1>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login />} />
