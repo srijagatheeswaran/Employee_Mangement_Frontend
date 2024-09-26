@@ -21,7 +21,7 @@ function Calendar() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://127.0.0.1:5000/profile/Calendar', {
+                const response = await fetch('https://employee-management-backend-1w27.onrender.com/profile/Calendar', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

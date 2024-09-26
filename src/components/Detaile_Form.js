@@ -38,7 +38,7 @@ export default function DetailForm({ Details }) {
         if (Object.keys(errors).length === 0) {
             setloader(true)
             try {
-                const response = await fetch('http://127.0.0.1:5000/DetailsForm', {
+                const response = await fetch('https://employee-management-backend-1w27.onrender.com/DetailsForm', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

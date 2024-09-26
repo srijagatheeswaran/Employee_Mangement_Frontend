@@ -15,7 +15,7 @@ export default function Profile() {
     async function checkTokan() {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch('http://127.0.0.1:5000/profile', {
+            const response = await fetch('https://employee-management-backend-1w27.onrender.com/profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

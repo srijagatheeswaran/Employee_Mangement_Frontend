@@ -13,7 +13,7 @@ export default function Details() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch('http://127.0.0.1:5000/profile/profile_Details', {
+                const response = await fetch('https://employee-management-backend-1w27.onrender.com/profile/profile_Details', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

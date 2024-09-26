@@ -42,7 +42,7 @@ function CheckImg(props) {
                     seterror("Camera API not supported by this browser.");
                 }
             } catch (error) {
-                seterror("Error accessing the camera: " + error.message);
+                seterror("Error accessing the camera: reload the Browser " + error.message+"Reload the Browser and Try again");
             }
         };
 
@@ -77,7 +77,7 @@ function CheckImg(props) {
         // console.log(imageDataUrl)
         setloader(true)
         try {
-            const response = await fetch('http://127.0.0.1:5000/compare', {
+            const response = await fetch('https://employee-management-backend-1w27.onrender.com/compare', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
