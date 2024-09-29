@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import './css/login.css'
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -9,6 +11,7 @@ function Login() {
     //for routeing 
     const [show, setshow] = useState(false);
     const [loader, setloader] = useState(false)
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
 
 
@@ -31,7 +34,7 @@ function Login() {
 
     //for form validation
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    // const [isSubmitted, setIsSubmitted] = useState(false);
     const [inputs, setInputs] = useState({})
 
     const validate = () => {
@@ -56,8 +59,34 @@ function Login() {
 
     }
     //for submit 
-    const [reserror, setreserror] = useState({})
-    const [errshow, seterrshow] = useState(false)
+    // const [reserror, setreserror] = useState({})
+    // const [errshow, seterrshow] = useState(false)
+
+    function notifiyErr(err) {
+        toast.error(err, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
+    function notifiysuccess(data) {
+        toast.success(data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
 
     async function login(e) {
 
@@ -68,7 +97,7 @@ function Login() {
 
         if (Object.keys(errors).length === 0) {
             setloader(true)
-            setIsSubmitted(true);
+            // setIsSubmitted(true);
             // console.log('Form data:', inputs);
             try {
                 const response = await fetch('https://employee-management-backend-1w27.onrender.com/login', {
@@ -84,10 +113,12 @@ function Login() {
                     // console.log('Success:', data);   
                     if (data.message == 'Login failed. Check your email and password.') {
                         // console.log(data.message);
-                        setreserror({ "message": data.message })
-                        seterrshow(true)
+                        notifiyErr(data.message)
+                        // setreserror({ "message": data.message })
+                        // seterrshow(true)
                     }
                     else {
+                        notifiysuccess("! Welcome")
                         localStorage.setItem('authToken', data.token);
                         localStorage.setItem('email', data.email_or_mobilenumber)
                         localStorage.setItem('login', true);
@@ -97,8 +128,9 @@ function Login() {
                 }
             } catch (error) {
                 console.log('Error');
-                setreserror({ "message": error })
-                seterrshow(true)
+                notifiyErr(error)
+                // setreserror({ "message": error })
+                // seterrshow(true)
 
             } finally {
                 setloader(false)
@@ -106,10 +138,13 @@ function Login() {
             }
 
         } else {
-            setIsSubmitted(false);
+            // setIsSubmitted(false);
         }
 
     }
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
 
     return (show ?
@@ -133,9 +168,27 @@ function Login() {
                         </div>
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Your Password *" name='Password' onChange={change} />
+                                <div className="input-group">
+                                    <input
+                                        type={passwordVisible ? 'text' : 'password'}
+                                        className="form-control"
+                                        placeholder="Your Password *"
+                                        name='Password'
+                                        onChange={change}
+                                    />  
+                                    <div className="input-group-append">
+                                        <span
+                                            className="input-group-text"
+                                            onClick={togglePasswordVisibility}
+                                            style={{ cursor: 'pointer' ,color:'black' }}
+                                        >
+                                            {passwordVisible ? <i class="bi bi-eye-slash-fill"></i> :<i class="bi bi-eye-fill"></i>}
+                                        </span>
+                                    </div>
+                                </div>
+                                {formErrors.password && <span>{formErrors.password}</span>}
                             </div>
-                            {formErrors.password && <span>{formErrors.password}</span>}
+
 
                         </div>
                     </div>
@@ -143,8 +196,9 @@ function Login() {
                     <div className='login-box'>
                         <p className=' login' onClick={registernav}>I Don't Have a Account</p>
                     </div>
+                    <ToastContainer />
 
-                    {errshow ? <div className='text-danger my-2 mess'>{reserror.message} </div> : null}
+                    {/* {errshow ? <div className='text-danger my-2 mess'>{reserror.message} </div> : null} */}
                 </div>
             </form>
         </div> : null

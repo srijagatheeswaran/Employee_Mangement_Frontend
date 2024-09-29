@@ -1,16 +1,18 @@
 import { useEffect, useState, useRef } from "react";
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CheckImg(props) {
-    const [showerror, seterror] = useState(null)
+    // const [showerror, seterror] = useState(null)
     const { email } = props
     let [count, setcount] = useState(1)
     const [show, setshow] = useState(true)
     const [imageDataUrl, setimageDataUrl] = useState(null)
     const [showpic, setshowpic] = useState(false);
     const [loader, setloader] = useState(false)
-    const [serverErr, setserverErr] = useState(null)
-    const [showserver, setshowserver] = useState(null)
-    const [showres, setres] = useState(false)
+    // const [serverErr, setserverErr] = useState(null)
+    // const [showserver, setshowserver] = useState(null)
+    // const [showres, setres] = useState(false)
 
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -23,6 +25,7 @@ function CheckImg(props) {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     const videoElement = videoRef.current;
+                    setshowpic(true);
 
                     if (videoElement) {
                         videoElement.srcObject = stream;
@@ -31,18 +34,18 @@ function CheckImg(props) {
                         videoElement.style.display = 'none';
 
                         videoElement.onloadedmetadata = () => {
-                            setshowpic(true);
-
                             // Show the video element
                             videoElement.style.display = 'block';
                             videoElement.play();  // Ensure video starts playing
                         };
                     }
                 } else {
-                    seterror("Camera API not supported by this browser.");
+                    setshowpic(false);
+                    notifiyErr("Camera API not supported by this browser.");
                 }
             } catch (error) {
-                seterror("Error accessing the camera: reload the Browser " + error.message+"Reload the Browser and Try again");
+                setshowpic(false);
+                notifiyErr("Error accessing the camera: reload the Browser " + error.message + "Reload the Browser and Try again");
             }
         };
 
@@ -71,6 +74,31 @@ function CheckImg(props) {
             setshow(false);
         }
     }, [count]);
+    function notifiyErr(err) {
+        toast.error(err, {
+            position: "top-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
+    function notifiysuccess(data) {
+        toast.success(data, {
+            position: "top-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
 
     async function send() {
         // console.log("send")
@@ -89,21 +117,23 @@ function CheckImg(props) {
                 // console.log(data)
                 if (data.error) {
                     setimageDataUrl(null)
-                    setserverErr(data.error)
+                    // setserverErr(data.error)
+                    notifiyErr(data.error)
                     setcount((pre) => pre + 1)
                     if (show === false) {
                         setshow(true);
                     }
                     console.log(count)
-                    setres(true)
+                    // setres(true)
 
                 }
                 else {
                     console.log(data)
-                    setserverErr(null)
-                    setshowserver(data.message)
+                    notifiysuccess(data.message)
+                    // setserverErr(null)
+                    // setshowserver(data.message)
                     closeMediaStream(streamRef.current)
-                    setres(true)
+                    // setres(true)
                 }
 
             }
@@ -111,6 +141,8 @@ function CheckImg(props) {
 
         catch (error) {
             console.log(error)
+            notifiyErr(error)
+
 
         } finally {
             setloader(false)
@@ -136,23 +168,19 @@ function CheckImg(props) {
         {loader ? <div className='loaderHead'>
             <div className="loader"></div>
         </div> : null}
-        {showerror ?
-            <div className="error mt-5"><h1 className="text-danger">{showerror}</h1></div> :
+        {showpic ?
             <div className="picBox">
                 <h1 className="text-primary">Attendance</h1>
                 <video ref={videoRef} id="camera-stream" autoPlay ></video>
-                {showpic ? (
-                    <>
-                        {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
-                        {show ? null : <button onClick={send} className="btn btn-success">conform</button>}
-                        <canvas id="image-capture"></canvas>
-                    </>
-                ) : (
-                    <div className="Waiting"><h1>Waiting for camera permission...</h1></div>
-                )}
-                {showres ? <p className="text-danger ">{serverErr}</p> : null}
-                {showres ? <p className="text-success ">{showserver}</p> : null}
-            </div>}
+
+                {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
+                {show ? null : <button onClick={send} className="btn btn-success">conform</button>}
+                <canvas id="image-capture"></canvas>
+
+                {/* {showres ? <p className="text-danger ">{serverErr}</p> : null}
+                {showres ? <p className="text-success ">{showserver}</p> : null}*/}
+            </div>:null}
+            <ToastContainer />
     </>
 
 

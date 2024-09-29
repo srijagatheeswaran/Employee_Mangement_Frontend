@@ -3,6 +3,7 @@ import "./css/Details.css";
 import DetailForm from './Detaile_Form';
 import { useEffect, useState } from 'react';
 import Slider from './slide';
+import Loading from './Loading';
 
 export default function Details() {
     const navigation = useNavigate();
@@ -53,8 +54,14 @@ export default function Details() {
         localStorage.removeItem('email');
         navigation('/login');
     }
+    useEffect(() => {
+        const loginStatus = localStorage.getItem('login');
+        if (loginStatus === 'false') {
+            navigation('/login');
+        }
+    }, [navigation]);
 
-    return (
+    return (<>{data?
         <div className='profile'>
             <header>
                 <div>
@@ -68,10 +75,10 @@ export default function Details() {
                 <div className="contantBox">
                     <div className='contant1'>
                         <h1>Personal Details</h1>
-                        {data ? <DetailForm Details={data} /> : <p className='text-primary'>Loading...</p>}
+                     <DetailForm Details={data} /> 
                     </div>
                 </div>
             </div>
-        </div>
+        </div>:<Loading/>}</>
     );
 }

@@ -4,11 +4,13 @@ import './css/profile.css';
 import TackPic from './takepic';
 import CheckImg from './check';
 import Slider from './slide';
+import Loading from './Loading';
 
 export default function Profile() {
     const navigation = useNavigate();
     const [show, setshow] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const[showSrc,setsrc] =useState(false)
 
 
     const email = localStorage.getItem('email')
@@ -25,10 +27,11 @@ export default function Profile() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Success:', data);
-                localStorage.setItem('login', data);
-                setIsLoggedIn(data);
-                setshow(data)
+                // console.log('Success:', data);
+                localStorage.setItem('login', data.status);
+                setIsLoggedIn(data.status);
+                setshow(data.status)
+                setsrc(data.sourceImg)
             } else {
                 console.error('Error:', response.statusText);
                 setIsLoggedIn(false)
@@ -93,12 +96,13 @@ export default function Profile() {
             <div className="contantBox">
                 <div className='contant'>
                     <div className='imageBox'>
+                        {showSrc?null:
                         <div className='sourceBox'>
-                            <h1 className="text-danger">Uplode source image one time is enough....</h1>
+                            <h1 className="text-danger">Uplode Source Image One Time Is Enough....</h1>
                             {tackpic ? null : <button onClick={showpic} className="btn btn-primary send">Uplode source image</button>}
-                        </div>
+                        </div>}
                         <div className='targetBox'>
-                            <h1>Update your attendance</h1>
+                            <h1>Update Your Daily Attendance</h1>
                             {targetpic ? null : <button onClick={showpic1} className="btn btn-primary send">Update</button>}
                         </div>
                     </div>
@@ -115,5 +119,5 @@ export default function Profile() {
 
 
 
-    </div> : <p className='loading text-primary'>Loading.....</p>
+    </div> : <Loading/>
 }

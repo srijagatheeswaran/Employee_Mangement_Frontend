@@ -2,6 +2,7 @@ import Slider from "./slide";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import "./css/Calendar.css"
+import Loading from "./Loading";
 
 
 
@@ -18,6 +19,12 @@ function Calendar() {
         localStorage.removeItem('email');
         navigation('/login')
     }
+    useEffect(() => {
+        const loginStatus = localStorage.getItem('login');
+        if (loginStatus === 'false') {
+            navigation('/login');
+        }
+    }, [navigation]);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -56,7 +63,7 @@ function Calendar() {
     const toggleMenu = () => {
         setIsOpen(!isOpen); // Toggle the menu state
     };
-    return <>
+    return <>{show?<Loading/>:
         <div className='profile'>
             <header>
                 <div>
@@ -68,7 +75,6 @@ function Calendar() {
             <div className="midContant">
                 <Slider Open={isOpen} />
                 <div className="contantBox">
-                    {show ? <p>loading....</p> :
                         <div className='contant1'>
                             <h1>Attendance Details</h1>
                             {error ? <p>No login history found.....</p> :
@@ -94,10 +100,10 @@ function Calendar() {
                                     </tbody>
                                 </table>}
 
-                        </div>}
+                        </div>
                 </div>
             </div>
-        </div>
+        </div>}
     </>
 
 

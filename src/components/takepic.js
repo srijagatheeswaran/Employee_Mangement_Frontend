@@ -1,22 +1,50 @@
 import { useEffect, useState, useRef } from "react";
 import "./css/tackpic.css";
 import ImageGallery from "./imageGallery";
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function TackPic(props) {
-    const [showerror, seterror] = useState(null);
+    // const [showerror, seterror] = useState(null);
     const [count, setcount] = useState(3);
     const [show, setshow] = useState(true);
     const [imgArr, setImgArr] = useState([]);
     const { email } = props;
     const [showpic, setshowpic] = useState(false);
     const [loader, setloader] = useState(false)
-    const [serverErr, setserverErr] = useState(null)
-    const [showserver, setshowserver] = useState(null)
-    const [showres, setres] = useState(false)
+    // const [serverErr, setserverErr] = useState(null)
+    // const [showserver, setshowserver] = useState(null)
+    // const [showres, setres] = useState(false)
     // Create a ref for the video element
     const videoRef = useRef(null);
     const streamRef = useRef(null);
+
+    function notifiyErr(err) {
+        toast.error(err, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
+    function notifiysuccess(data) {
+        toast.success(data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "colored",
+            transition: Flip,
+        });
+    }
 
     useEffect(() => {
         const startCamera = async () => {
@@ -26,6 +54,7 @@ function TackPic(props) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     const videoElement = videoRef.current;
 
+                    setshowpic(true)
                     if (videoElement) {
                         videoElement.srcObject = stream;
                         streamRef.current = stream;
@@ -35,7 +64,6 @@ function TackPic(props) {
 
                         // Wait for the video metadata to load
                         videoElement.onloadedmetadata = () => {
-                            setshowpic(true);  // Now we are sure the video stream is ready
 
                             // Show the video element
                             videoElement.style.display = 'block';
@@ -43,10 +71,12 @@ function TackPic(props) {
                         };
                     }
                 } else {
-                    seterror("Camera API not supported by this browser.");
+                    setshowpic(false);
+                    notifiyErr("Camera API not supported by this browser.");
                 }
             } catch (error) {
-                seterror("Error accessing the camera: reload the Browser " + error.message+"Reload the Browser and Try again");
+                setshowpic(false);
+                notifiyErr("Error accessing the camera: " + error.message );
             }
         };
 
@@ -108,15 +138,17 @@ function TackPic(props) {
                 if (data.error) {
                     console.log(data.error, data.index)
                     removeImage(data.index)
-                    setserverErr(data.error)
-                    setres(true)
+                    notifiyErr(data.error)
+                    // setserverErr(data.error)
+                    // setres(true)
                 }
                 else {
                     console.log(data)
-                    setshowserver(data)
+                    notifiysuccess(data)
+                    // setshowserver(data)
                     closeMediaStream(streamRef.current)
-                    setserverErr(null)
-                    setres(true)
+                    // setserverErr(null)
+                    // setres(true)
                 }
 
             }
@@ -126,6 +158,7 @@ function TackPic(props) {
             }
         } catch (error) {
             console.log(error);
+            notifiyErr(error)
 
 
         } finally {
@@ -152,9 +185,8 @@ function TackPic(props) {
         <>{loader ? <div className='loaderHead'>
             <div className="loader"></div>
         </div> : null}
-            {showerror ? (
-                <div className="error mt-5"><h1 className="text-danger">{showerror}</h1></div>
-            ) : (
+            {showpic ? 
+                (
                 <div className="picBox">
                     <h1 className="text-primary">Source Image</h1>
                     <div className='video'>
@@ -164,18 +196,18 @@ function TackPic(props) {
                         <canvas id="image-capture"></canvas>
 
                     </div>
-                    {showpic ? (
+                    
                         <>
                             {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
                             {show ? null : <button onClick={send} className="btn btn-success ">Confirm</button>}
                         </>
-                    ) : (
-                        <div className="Waiting"><h1>Waiting for camera permission...</h1></div>
-                    )}
-                    {showres ? <p className="text-success">{showserver}</p> : null}
-                    {showres ? <p className="text-danger">{serverErr}</p> : null}
+                   
+                    
+                    {/* {showres ? <p className="text-success">{showserver}</p> : null}
+                    {showres ? <p className="text-danger">{serverErr}</p> : null} */}
                 </div>
-            )}
+            ):null}
+            <ToastContainer />
         </>
     );
 }

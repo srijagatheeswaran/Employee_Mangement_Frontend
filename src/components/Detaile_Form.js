@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { ToastContainer, toast ,Flip} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function DetailForm({ Details }) {
     const [inputs, setInputs] = useState({
@@ -29,6 +31,31 @@ export default function DetailForm({ Details }) {
         }
         return errors;
     };
+    function notifiyErr(err) {
+        toast.error(err, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            transition: Flip,
+            });
+    }
+    function notifiysuccess(data){
+        toast.success(data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "colored",
+            transition: Flip,
+            });
+    }
     async function sendReq() {
         // console.log(inputs)
         setIsSubmitted(false)
@@ -49,11 +76,13 @@ export default function DetailForm({ Details }) {
                 const data = await response.json();
                 if (response.ok) {
                     // console.log(data)
-                    setIsSubmitted(true)
+                    // setIsSubmitted(true)
+                    notifiysuccess("Details Update Successfully!")
 
                 }
             } catch (error) {
                 console.log('Error');
+                notifiyErr(error)
 
             } finally {
                 setloader(false)
@@ -89,7 +118,8 @@ export default function DetailForm({ Details }) {
                 <input className='disable' placeholder='Mobilenumber' type='text' disabled value={inputs.mobilenumber} />
             </div>
             <button className='btn btn-success' onClick={sendReq} type="button">Update</button>
-            {isSubmitted && <div className='text-success my-2 mess '> Details Update Successfully!</div>}
+            <ToastContainer/>
+            {/* {isSubmitted && <div className='text-success my-2 mess '> Details Update Successfully!</div>} */}
 
         </form>
 

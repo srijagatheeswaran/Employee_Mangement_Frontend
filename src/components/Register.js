@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import './css/register.css'
 import { useState, useEffect } from 'react';
+import React from 'react';
+import { ToastContainer, toast ,Flip} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Register() {
 
 
@@ -27,7 +30,7 @@ function Register() {
 
     // form validation
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    // const [isSubmitted, setIsSubmitted] = useState(false);
     const [inputs, setInputs] = useState({
         name: '',
         email: '',
@@ -98,12 +101,37 @@ function Register() {
         setInputs((pre) => { return { ...pre, [name]: value } })
 
     }
-    const [resError, setResError] = useState({})
-    const [Submitted, setSubmitted] = useState(false);
+    // const [resError, setResError] = useState({})
+    // const [Submitted, setSubmitted] = useState(false);
     const [loader, setloader] = useState(false)
 
-    async function register(e) {
+    function notifiyErr(err) {
+        toast.error(err, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            transition: Flip,
+            });
+    }
+    function notifiysuccess(data){
+        toast.success(data, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: 0,
+            theme: "colored",
+            transition: Flip,
+            });
+    }
 
+    async function register(e) {
         e.preventDefault()
         const errors = validate();
         setFormErrors(errors);
@@ -123,17 +151,19 @@ function Register() {
                 if (response.ok) {
                     const data = await response.json();
                     if (data.message == 'Email or MobileNumber is Already Registered') {
-                        setResError({ "error": data.message })
-                        setSubmitted(true)
-                        setIsSubmitted(false)
+                        // setResError({ "error": data.message })
+                        notifiyErr(data.message)
+                        // setSubmitted(true)
+                        // setIsSubmitted(false)
                         setloader(false)
 
 
                     }
                     else {
                         console.log('Success:', data);
-                        setIsSubmitted(true)
-                        setSubmitted(false)
+                        notifiysuccess("Registration successful! Welcome")
+                        // setIsSubmitted(true)
+                        // setSubmitted(false)
                         setloader(false)
                         setInputs({
                             name: '',
@@ -142,26 +172,30 @@ function Register() {
                             password: '',
                             repassword: ''
                         })
+                        navigation('/login');
 
                     }
 
 
                 } else {
                     console.error('Error:', response.statusText);
-                    setResError({ "error": response.statusText })
-                    setSubmitted(true)
-                    setloader(false)
+                    notifiyErr(response.statusText)
+                    // setResError({ "error": response.statusText })
+                    // setSubmitted(true)
 
 
                 }
             } catch (error) {
                 console.error('Error:', error);
-                setResError({ "error": error })
+                notifiyErr(error)
+                // setResError({ "error": error })
+            }finally{
                 setloader(false)
+
             }
 
         } else {
-            setIsSubmitted(false);
+            // setIsSubmitted(false);
         }
     }
     return (show ? <>
@@ -207,9 +241,10 @@ function Register() {
                     <div className='login-box'>
                         <p className=' login' onClick={loginnav}>Already have a account ?</p>
                     </div>
+                    <ToastContainer/>
 
-                    {isSubmitted && <div className='text-success my-2 mess'> Register successfully!</div>}
-                    {Submitted && <div className='text-danger my-2 mess'>{resError['error']} </div>}
+                    {/* {isSubmitted && <div className='text-success my-2 mess'> Register successfully!</div>} */}
+                    {/* {Submitted && <div className='text-danger my-2 mess'>{resError['error']} </div>} */}
                 </div>
             </form>
 
