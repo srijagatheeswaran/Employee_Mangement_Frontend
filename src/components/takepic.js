@@ -126,7 +126,7 @@ function TackPic(props) {
     async function send() {
         setloader(true)
         try {
-            const response = await fetch('https://employee-management-backend-1w27.onrender.com/tackpic', {
+            const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/tackpic', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

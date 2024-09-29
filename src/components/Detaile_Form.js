@@ -65,7 +65,7 @@ export default function DetailForm({ Details }) {
         if (Object.keys(errors).length === 0) {
             setloader(true)
             try {
-                const response = await fetch('https://employee-management-backend-1w27.onrender.com/DetailsForm', {
+                const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/DetailsForm', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

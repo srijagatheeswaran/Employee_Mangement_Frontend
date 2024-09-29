@@ -12,12 +12,11 @@ export default function Profile() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const[showSrc,setsrc] =useState(false)
 
-
     const email = localStorage.getItem('email')
     async function checkTokan() {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch('https://employee-management-backend-1w27.onrender.com/profile', {
+            const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

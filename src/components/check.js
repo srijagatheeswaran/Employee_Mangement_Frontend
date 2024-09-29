@@ -105,7 +105,7 @@ function CheckImg(props) {
         // console.log(imageDataUrl)
         setloader(true)
         try {
-            const response = await fetch('https://employee-management-backend-1w27.onrender.com/compare', {
+            const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/compare', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

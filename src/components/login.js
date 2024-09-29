@@ -100,7 +100,7 @@ function Login() {
             // setIsSubmitted(true);
             // console.log('Form data:', inputs);
             try {
-                const response = await fetch('https://employee-management-backend-1w27.onrender.com/login', {
+                const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
