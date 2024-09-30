@@ -28,6 +28,7 @@ function CheckImg(props) {
                     const videoElement = videoRef.current;
                     setshowpic(true);
                     setloader(true)
+                    console.log(videoRef.current)
 
                     if (videoElement) {
                         videoElement.srcObject = stream;

@@ -54,10 +54,10 @@ function TackPic(props) {
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     const videoElement = videoRef.current;
-
+                    console.log(videoRef.current)
                     setshowpic(true)
                     setloader(true)
-                    
+
 
                     if (videoElement) {
                         videoElement.srcObject = stream;
@@ -76,10 +76,11 @@ function TackPic(props) {
 
                         };
                     }
-                    // else {
+                    else {
+                        console.log("ss")
                         // setshowpic(false);
                         // setloader(false)
-                    // }
+                    }
                 } else {
                     setshowpic(false);
                     notifiyErr("Camera API not supported by this browser.");
