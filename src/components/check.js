@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function CheckImg(props) {
     // const [showerror, seterror] = useState(null)
     const { email } = props
+    const {showpic3} =props
     let [count, setcount] = useState(1)
     const [show, setshow] = useState(true)
     const [imageDataUrl, setimageDataUrl] = useState(null)
@@ -26,6 +27,7 @@ function CheckImg(props) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                     const videoElement = videoRef.current;
                     setshowpic(true);
+                    setloader(true)
 
                     if (videoElement) {
                         videoElement.srcObject = stream;
@@ -37,8 +39,15 @@ function CheckImg(props) {
                             // Show the video element
                             videoElement.style.display = 'block';
                             videoElement.play();  // Ensure video starts playing
+                            setloader(false)
+
                         };
+
                     }
+                    // else {
+                    //     setshowpic(false);
+                    //     setloader(false)
+                    // }
                 } else {
                     setshowpic(false);
                     notifiyErr("Camera API not supported by this browser.");
@@ -66,7 +75,7 @@ function CheckImg(props) {
 
 
         setcount((pre) => pre - 1)
-        console.log(count)
+        // console.log(count)
 
     }
     useEffect(() => {
@@ -128,11 +137,13 @@ function CheckImg(props) {
 
                 }
                 else {
-                    console.log(data)
+                    // console.log(data)
                     notifiysuccess(data.message)
                     // setserverErr(null)
                     // setshowserver(data.message)
                     closeMediaStream(streamRef.current)
+                    setshowpic(false)
+                    showpic3()
                     // setres(true)
                 }
 
@@ -150,17 +161,28 @@ function CheckImg(props) {
 
     }
     function closeMediaStream(stream) {
-        // Check if the stream is valid
-        console.log(stream, stream.getTracks)
-        if (stream && stream.getTracks) {
+        // Check if the stream is valid and has tracks
+        if (stream && typeof stream.getTracks === 'function') {
+            // Stop all tracks (audio and video) in the stream
             const tracks = stream.getTracks();
             tracks.forEach(track => {
+                console.log('Stopping track:', track);
                 track.stop();
             });
-
-            console.log('Media stream has been stopped.');
+    
+            // Log to check if the stream is inactive after stopping
+            console.log('Is stream active after stop?:', stream.active);  // Should be false
         } else {
-            console.warn('Invalid media stream.');
+            console.warn('Invalid media stream or no tracks found.');
+        }
+    
+        if (stream && typeof stream.getTracks === 'function') {
+            const activeTracks = stream.getTracks().filter(track => track.readyState === 'live');
+            if (activeTracks.length > 0) {
+                console.warn('Some tracks are still active:', activeTracks);
+            } else {
+                console.log('All media tracks stopped successfully.');
+            }
         }
     }
 
@@ -179,8 +201,8 @@ function CheckImg(props) {
 
                 {/* {showres ? <p className="text-danger ">{serverErr}</p> : null}
                 {showres ? <p className="text-success ">{showserver}</p> : null}*/}
-            </div>:null}
-            <ToastContainer />
+            </div> : null}
+        <ToastContainer />
     </>
 
 

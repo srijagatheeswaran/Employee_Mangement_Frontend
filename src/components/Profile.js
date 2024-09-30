@@ -11,9 +11,10 @@ export default function Profile() {
     const [show, setshow] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const[showSrc,setsrc] =useState(false)
-
+    const [reload, setReload] = useState(false);
     const email = localStorage.getItem('email')
     async function checkTokan() {
+        // console.log('in')
         const token = localStorage.getItem('authToken');
         try {
             const response = await fetch('https://employee-management-backend-2-bf4e.onrender.com/profile', {
@@ -53,7 +54,7 @@ export default function Profile() {
     // Call checkTokan on component mount
     useEffect(() => {
         checkTokan();
-    }, []);
+    }, [reload]);
 
     //for logout
     function logout() {
@@ -65,7 +66,7 @@ export default function Profile() {
 
     const [tackpic, settack] = useState(false)
     const [targetpic, settargetpic] = useState(false)
-    function showpic() {
+    const showpic2 =function () {
         settack(true)
         settargetpic(false)
     }
@@ -73,6 +74,11 @@ export default function Profile() {
         settargetpic(true)
         settack(false)
     }
+    const showpic3=function(){
+        settargetpic(false)
+
+    }
+    
     // function close() {
     //     settack(false)
     //     settargetpic(false)
@@ -80,6 +86,11 @@ export default function Profile() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => {
         setIsOpen(!isOpen); // Toggle the menu state
+    };
+    const reloadProfile = () => {
+        // console.log(reload)
+        setReload(prevReload => !prevReload);
+
     };
 
     return show ? <div className='profile'>
@@ -98,7 +109,7 @@ export default function Profile() {
                         {showSrc?null:
                         <div className='sourceBox'>
                             <h1 className="text-danger">Uplode Source Image One Time Is Enough....</h1>
-                            {tackpic ? null : <button onClick={showpic} className="btn btn-primary send">Uplode source image</button>}
+                            {tackpic ? null : <button onClick={showpic2} className="btn btn-primary send">Uplode source image</button>}
                         </div>}
                         <div className='targetBox'>
                             <h1>Update Your Daily Attendance</h1>
@@ -107,8 +118,8 @@ export default function Profile() {
                     </div>
                     <div className='imgPicBox'>
                         {/* {targetpic || tackpic ? <i class="bi bi-x" onClick={close}></i> : null} */}
-                        {targetpic ? <CheckImg email={email} /> : null}
-                        {tackpic ? <TackPic email={email} /> : null}
+                        {targetpic ? <CheckImg email={email} showpic3={showpic3} /> : null}
+                        {tackpic ? <TackPic email={email} onRequestSuccess={reloadProfile} /> : null}
 
                     </div>
                 </div>

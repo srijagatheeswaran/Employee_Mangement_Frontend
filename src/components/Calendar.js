@@ -46,7 +46,7 @@ function Calendar() {
                         setLoginHistory(result.login_history)
                         console.log(result.login_history)
                         setError(false)
-                        console.log(result)
+                        // console.log(result)
                         setshow(false)
                     }
                 } else {
