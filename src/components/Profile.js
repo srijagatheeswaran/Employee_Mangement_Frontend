@@ -108,8 +108,8 @@ export default function Profile() {
                     <div className='imageBox'>
                         {showSrc?null:
                         <div className='sourceBox'>
-                            <h1 className="text-danger">Uplode Source Image One Time Is Enough....</h1>
-                            {tackpic ? null : <button onClick={showpic2} className="btn btn-primary send">Uplode source image</button>}
+                            <h1 className="text-danger">Upload Source Image One Time Is Enough....</h1>
+                            {tackpic ? null : <button onClick={showpic2} className="btn btn-primary send">Upload image</button>}
                         </div>}
                         <div className='targetBox'>
                             <h1>Update Your Daily Attendance</h1>

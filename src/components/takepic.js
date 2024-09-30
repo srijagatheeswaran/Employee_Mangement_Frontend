@@ -57,6 +57,7 @@ function TackPic(props) {
 
                     setshowpic(true)
                     setloader(true)
+                    
 
                     if (videoElement) {
                         videoElement.srcObject = stream;
