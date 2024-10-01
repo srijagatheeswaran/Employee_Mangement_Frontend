@@ -208,7 +208,7 @@ function CheckImg(props) {
             {showpic ?
                 <>
                     {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
-                    {show ? null : <button onClick={send} className="btn btn-success">conform</button>}
+                    {show ? null : <button onClick={send} className="btn btn-success">Confirm</button>}
                     <canvas id="image-capture"></canvas></> : null}
 
             {/* {showres ? <p className="text-danger ">{serverErr}</p> : null}

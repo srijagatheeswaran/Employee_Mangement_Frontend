@@ -228,11 +228,11 @@ function Register() {
                         </div>
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Your Password *" name='password' onChange={change} value={inputs.password} />
+                                <input type="password" className="form-control" placeholder="Your Password *" name='password' onChange={change} value={inputs.password} />
                             </div>
                             {formErrors.password && <span>{formErrors.password}</span>}
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Confirm Password *" name='repassword' onChange={change} value={inputs.repassword} />
+                                <input type="password" className="form-control" placeholder="Confirm Password *" name='repassword' onChange={change} value={inputs.repassword} />
                             </div>
                             {formErrors.repassword && <span>{formErrors.repassword}</span>}
                         </div>
