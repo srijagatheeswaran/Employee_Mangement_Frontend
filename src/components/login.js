@@ -182,7 +182,7 @@ function Login() {
                                             onClick={togglePasswordVisibility}
                                             style={{ cursor: 'pointer' ,color:'black' }}
                                         >
-                                            {passwordVisible ? <i class="bi bi-eye-slash-fill"></i> :<i class="bi bi-eye-fill"></i>}
+                                            {passwordVisible ? <i className="bi bi-eye-slash-fill"></i> :<i className="bi bi-eye-fill"></i>}
                                         </span>
                                     </div>
                                 </div>

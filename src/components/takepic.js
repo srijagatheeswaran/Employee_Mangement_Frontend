@@ -15,6 +15,7 @@ function TackPic(props) {
     const [showpic, setshowpic] = useState(false);
     const [loader, setloader] = useState(false)
     const [videoElement, setvideoElement] = useState(null)
+    const [isPTagHidden, setIsPTagHidden] = useState(false);
     // const [serverErr, setserverErr] = useState(null)
     // const [showserver, setshowserver] = useState(null)
     // const [showres, setres] = useState(false)
@@ -168,6 +169,7 @@ function TackPic(props) {
                     closeMediaStream(streamRef.current)
                     setshowpic(false)
                     onRequestSuccess()
+                    setIsPTagHidden(true)
                     // setserverErr(null)
                     // setres(true)
                 }
@@ -216,7 +218,7 @@ function TackPic(props) {
 
             <div className="picBox">
             {showpic ?  <h1 className="text-primary">Source Image</h1>:null}
-                <div className='video'>
+                <div className='video' style={{ display: isPTagHidden ? 'none' : 'flex' }}>
                     <video id="camera-stream" autoPlay playsInline></video>
                     <ImageGallery imageDataUrls={imgArr} removeImage={removeImage} />
 

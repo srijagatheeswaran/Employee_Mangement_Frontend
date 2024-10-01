@@ -37,6 +37,7 @@ function CheckImg(props) {
                     if (videoElement) {
                         videoElement.srcObject = stream;
                         streamRef.current = stream;
+                        
 
                         videoElement.style.display = 'none';
 
@@ -143,12 +144,14 @@ function CheckImg(props) {
                 }
                 else {
                     // console.log(data)
+                    // console.log(data.message)
                     notifiysuccess(data.message)
                     // setserverErr(null)
                     // setshowserver(data.message)
                     closeMediaStream(streamRef.current)
                     setshowpic(false)
-                    showpic3()
+                    videoElement.style.display = 'none';
+                    // showpic3()
                     // setres(true)
                 }
 
@@ -191,10 +194,12 @@ function CheckImg(props) {
         }
     }
 
-    return <>
+    return<>
+     <>
         {loader ? <div className='loaderHead'>
             <div className="loader"></div>
         </div> : null}
+        </>
 
         <div className="picBox">
             {showpic ? <h1 className="text-primary">Attendance</h1> : null}
