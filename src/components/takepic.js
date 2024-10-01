@@ -11,14 +11,15 @@ function TackPic(props) {
     const [show, setshow] = useState(true);
     const [imgArr, setImgArr] = useState([]);
     const { email } = props;
-    const{onRequestSuccess}=props
+    const { onRequestSuccess } = props
     const [showpic, setshowpic] = useState(false);
     const [loader, setloader] = useState(false)
+    const [videoElement, setvideoElement] = useState(null)
     // const [serverErr, setserverErr] = useState(null)
     // const [showserver, setshowserver] = useState(null)
     // const [showres, setres] = useState(false)
     // Create a ref for the video element
-    const videoRef = useRef(null);
+    // const videoRef = useRef(null);
     const streamRef = useRef(null);
 
     function notifiyErr(err) {
@@ -53,10 +54,15 @@ function TackPic(props) {
                 // Check if mediaDevices and getUserMedia are available
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    const videoElement = videoRef.current;
-                    console.log(videoRef.current)
+                    setvideoElement(document.getElementById('camera-stream'))
+
+                    // const videoElement = videoRef.current;
+                    // const videoElement=document.getElementById('camera-stream')
+                    // console.log(videoRef.current)
+
                     setshowpic(true)
                     setloader(true)
+                    console.log(videoElement)
 
 
                     if (videoElement) {
@@ -92,12 +98,13 @@ function TackPic(props) {
         };
 
         startCamera();
-    }, []);  // Empty dependency array ensures this effect runs once on mount
+    }, [videoElement]);
+
 
     function captureImage() {
         const canvas = document.getElementById('image-capture');
         const context = canvas.getContext('2d');
-        const video = videoRef.current;
+        const video = document.getElementById('camera-stream');
 
         if (video) {
             canvas.width = video.videoWidth;
@@ -150,7 +157,7 @@ function TackPic(props) {
                     console.log(data.error, data.index)
                     removeImage(data.index)
                     notifiyErr(data.error)
-                    
+
                     // setserverErr(data.error)
                     // setres(true)
                 }
@@ -185,18 +192,18 @@ function TackPic(props) {
         // Check if the stream is valid
         if (stream && typeof stream.getTracks === 'function') {
             const tracks = stream.getTracks();
-            
+
             tracks.forEach(track => {
                 console.log('Stopping track:', track);
                 track.stop();  // Stop each track
             });
-    
+
             // After stopping all tracks, remove the stream from any video elements
             if (stream.active) {
                 console.log('Media stream is still active, stopping all tracks.');
                 stream.getTracks().forEach(track => track.stop()); // Ensure stopping all tracks
             }
-    
+
             console.log('Media stream has been stopped.');
         } else {
             console.warn('Invalid media stream.');
@@ -206,28 +213,28 @@ function TackPic(props) {
         <>{loader ? <div className='loaderHead'>
             <div className="loader"></div>
         </div> : null}
-            {showpic ?
-                (
-                    <div className="picBox">
-                        <h1 className="text-primary">Source Image</h1>
-                        <div className='video'>
-                            <video ref={videoRef} id="camera-stream" autoPlay playsInline></video>
-                            <ImageGallery imageDataUrls={imgArr} removeImage={removeImage} />
 
-                            <canvas id="image-capture"></canvas>
+            <div className="picBox">
+            {showpic ?  <h1 className="text-primary">Source Image</h1>:null}
+                <div className='video'>
+                    <video id="camera-stream" autoPlay playsInline></video>
+                    <ImageGallery imageDataUrls={imgArr} removeImage={removeImage} />
 
-                        </div>
+                    <canvas id="image-capture"></canvas>
 
+                </div>
+                {showpic ?
+                    (
                         <>
                             {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
                             {show ? null : <button onClick={send} className="btn btn-success ">Confirm</button>}
                         </>
+                    ) : null}
 
-
-                        {/* {showres ? <p className="text-success">{showserver}</p> : null}
+                {/* {showres ? <p className="text-success">{showserver}</p> : null}
                     {showres ? <p className="text-danger">{serverErr}</p> : null} */}
-                    </div>
-                ) : null}
+            </div>
+
             <ToastContainer />
         </>
     );

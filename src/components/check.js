@@ -5,17 +5,20 @@ import 'react-toastify/dist/ReactToastify.css';
 function CheckImg(props) {
     // const [showerror, seterror] = useState(null)
     const { email } = props
-    const {showpic3} =props
+    const { showpic3 } = props
     let [count, setcount] = useState(1)
     const [show, setshow] = useState(true)
     const [imageDataUrl, setimageDataUrl] = useState(null)
     const [showpic, setshowpic] = useState(false);
     const [loader, setloader] = useState(false)
+    const [videoElement, setvideoElement] = useState(null)
+
+
     // const [serverErr, setserverErr] = useState(null)
     // const [showserver, setshowserver] = useState(null)
     // const [showres, setres] = useState(false)
 
-    const videoRef = useRef(null);
+    // const videoRef = useRef(null);
     const streamRef = useRef(null);
 
 
@@ -25,10 +28,11 @@ function CheckImg(props) {
 
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    const videoElement = videoRef.current;
+                    setvideoElement(document.getElementById('camera-stream'))
+                    // const videoElement = videoRef.current;
                     setshowpic(true);
                     setloader(true)
-                    console.log(videoRef.current)
+                    // console.log(videoRef.current)
 
                     if (videoElement) {
                         videoElement.srcObject = stream;
@@ -60,7 +64,7 @@ function CheckImg(props) {
         };
 
         startCamera();
-    }, [])
+    }, [videoElement])
 
 
     function captureImage() {
@@ -170,13 +174,13 @@ function CheckImg(props) {
                 console.log('Stopping track:', track);
                 track.stop();
             });
-    
+
             // Log to check if the stream is inactive after stopping
             console.log('Is stream active after stop?:', stream.active);  // Should be false
         } else {
             console.warn('Invalid media stream or no tracks found.');
         }
-    
+
         if (stream && typeof stream.getTracks === 'function') {
             const activeTracks = stream.getTracks().filter(track => track.readyState === 'live');
             if (activeTracks.length > 0) {
@@ -191,18 +195,20 @@ function CheckImg(props) {
         {loader ? <div className='loaderHead'>
             <div className="loader"></div>
         </div> : null}
-        {showpic ?
-            <div className="picBox">
-                <h1 className="text-primary">Attendance</h1>
-                <video ref={videoRef} id="camera-stream" autoPlay ></video>
 
-                {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
-                {show ? null : <button onClick={send} className="btn btn-success">conform</button>}
-                <canvas id="image-capture"></canvas>
+        <div className="picBox">
+            {showpic ? <h1 className="text-primary">Attendance</h1> : null}
+            <video id="camera-stream" autoPlay ></video>
 
-                {/* {showres ? <p className="text-danger ">{serverErr}</p> : null}
+            {showpic ?
+                <>
+                    {show ? <button onClick={captureImage} className="clickPic">{count}</button> : null}
+                    {show ? null : <button onClick={send} className="btn btn-success">conform</button>}
+                    <canvas id="image-capture"></canvas></> : null}
+
+            {/* {showres ? <p className="text-danger ">{serverErr}</p> : null}
                 {showres ? <p className="text-success ">{showserver}</p> : null}*/}
-            </div> : null}
+        </div>
         <ToastContainer />
     </>
 
